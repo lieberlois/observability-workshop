@@ -2,15 +2,11 @@ package com.github.olly.workshop.imageholder.service
 
 import com.github.olly.workshop.imageholder.model.Image
 import com.github.olly.workshop.springevents.service.EventService
-import com.mongodb.MongoClient
-import com.mongodb.ServerAddress
-import de.bwaldvogel.mongo.MongoServer
-import de.bwaldvogel.mongo.backend.memory.MemoryBackend
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration
+import org.springframework.test.context.TestPropertySource
 import spock.lang.Specification
 
 /*
@@ -18,6 +14,8 @@ import spock.lang.Specification
  */
 
 @SpringBootTest
+@AutoConfigureDataMongo
+@TestPropertySource(properties = ["honeycomb.beeline.enabled=false"])
 class ImageServiceSpec extends Specification {
 
     @Autowired
@@ -99,20 +97,5 @@ class ImageServiceSpec extends Specification {
         then: 'then the one is persisted and we still have 1000 images in the db as another one was deleted'
         imageRepository.findById(image.id).isPresent()
         imageRepository.count() == 1000
-    }
-
-    @TestConfiguration
-    static class Config extends AbstractMongoConfiguration {
-        @Override
-        protected String getDatabaseName() {
-            return "test"
-        }
-
-        @Override
-        MongoClient mongoClient() {
-            MongoServer mongoServer = new MongoServer(new MemoryBackend())
-            mongoServer.bind()
-            return new MongoClient(new ServerAddress(mongoServer.getLocalAddress()))
-        }
     }
 }

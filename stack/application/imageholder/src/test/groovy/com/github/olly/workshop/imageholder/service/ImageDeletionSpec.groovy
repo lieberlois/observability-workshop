@@ -28,7 +28,7 @@ class ImageDeletionSpec extends Specification {
         and:
         1 * imageRepository.findAllIds() >> (1..numberOfImages).collect { new Image(id: it) }
         1 * imageRepository.findAllIds() >> (1..(numberOfImages - 1)).collect { new Image(id: it) }
-        imageRepository.findById(_) >> { String id -> new Optional<Image>(new Image(id: id)) }
+        imageRepository.findById(_ as String) >> { String id -> Optional<Image>.of(new Image(id: id)) }
 
         when:
         imageService.save(testImage)

@@ -1,13 +1,4 @@
-plugins {
-    id 'org.springframework.boot' version "2.1.18.RELEASE"
-    id 'java'
-}
-
-bootJar {
-    baseName = 'imagethumbnail'
-}
-
 dependencies {
     implementation project(':springevents')
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.0'
 }
