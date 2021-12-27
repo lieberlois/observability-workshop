@@ -50,6 +50,15 @@ services:
   traffic-gen:
     build: ../application/traffic-gen
 
+  mongodb-service:
+    image: mongo:3.2.12
+    # See https://github.com/docker-library/docs/tree/master/mongo#setting-wiredtiger-cache-size-limits
+    command: "--wiredTigerCacheSizeGB 2"
+    ports:
+      - '27017'
+    volumes:
+      - olly-mongodb:/data/db
+
 volumes:
   olly-mongodb:
     driver: local

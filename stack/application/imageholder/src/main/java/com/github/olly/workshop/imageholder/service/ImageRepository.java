@@ -11,6 +11,6 @@ import java.util.List;
 @Component
 interface ImageRepository extends MongoRepository<Image, String> {
 
-    @Query(value = "{}", fields = "{ 'id' : 1, 'name' : 1 , 'contentType' : 1 }")
+    @Query(value = "{}", fields = "{ 'id' : 1, 'name' : 1 , 'contentType' : 1 , 'data' : 0 }")
     List<Image> findAllIds();
 }
