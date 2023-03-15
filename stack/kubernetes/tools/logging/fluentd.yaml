@@ -1,7 +1,6 @@
 plugins:
   - fluent-plugin-elasticsearch
   - fluent-plugin-prometheus
-  - fluent-plugin-grafana-loki
   - fluent-plugin-rewrite-tag-filter
 fileConfigs:
   01_sources.conf: |-
@@ -211,17 +210,6 @@ fileConfigs:
             flush_interval      1s
             flush_thread_count  2
           </buffer>
-
-        </store>
-        <store>
-          @type               loki
-          url                 "http://loki-gateway.logging.svc.cluster.local"
-          flush_interval      1s
-          flush_at_shutdown   true
-          buffer_chunk_limit  1m
-          extract_kubernetes_labels true
-          remove_keys kubernetes
-          extra_labels {"app":"dima"}
         </store>
       </match>
 
